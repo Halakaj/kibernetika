@@ -33,23 +33,7 @@ board.on("ready", function(){
 
 io.sockets.on("connection", function(socket) {
     socket.emit("sporočiloKlientu", "Strežnik povezan, Arduino pripravljen.");
-    console.log("Socket id: " + socket.id);
     
-    // izpišemo IP naslov, vrata, ip verzijo
-    klientovIpNaslov = socket.request.socket.remoteAddress;
-    io.sockets.emit("sporočiloKlientu", "socket.request.socket.remoteAddress: " + socket.request.socket.remoteAddress);
-    // ::ffff:192.168.254.1 je ipv6 naslov
-    // v Chrome vpišemo: http://[::ffff:192.168.254.131]:8080 -> http://[::ffff:c0a8:fe83]:8080
-    io.sockets.emit("sporočiloKlientu", "socket.request.connection._peername.family: " + socket.request.connection._peername.family);
-    io.sockets.emit("sporočiloKlientu", "socket.request.connection._peername.port: " + socket.request.connection._peername.port);
-    io.sockets.emit("sporočiloKlientu", "socket.id: " + socket.id);
-    // izluščimo ipv4 naslov ->
-    var idx = klientovIpNaslov.lastIndexOf(':');
-    var address4;
-    if (~idx && ~klientovIpNaslov.indexOf('.')) address4 = klientovIpNaslov.slice(idx + 1);
-    io.sockets.emit("sporočiloKlientu", "ipv4 naslov: " + socket.request.socket.remoteAddress);
-    io.sockets.emit("sporočiloKlientu", "Podatki o klientu ----------------------------->");
-
     pošljiVrednostPrekoVtičnika = function (value) {
         io.sockets.emit("sporočiloKlientu", value);
     }
@@ -59,6 +43,7 @@ io.sockets.on("connection", function(socket) {
 var timeout = false;
 var zadnjaPoslana = null;
 var zadnjaVrednost = null;
+
 
 board.digitalRead(2, function(value) { // digitalno branje se dogodi večkrat, ob spremembi stanja iz 0->1 ali 1->0
     if (timeout !== false) { // če se je timeout spodaj pričel, (ob nestabilnem vhodu, npr. 0 1 0 1) ga biršemo
@@ -79,12 +64,13 @@ board.digitalRead(2, function(value) { // digitalno branje se dogodi večkrat, o
                 board.digitalWrite(13, board.HIGH);
                 console.log("Vrednost = 1, LED prižgana");
                 pošljiVrednostPrekoVtičnika(1);
+                
             }
 
         }
 
         zadnjaPoslana = zadnjaVrednost;
-    }, 500); // izvedemo po 50ms
+    }, 50); // izvedemo po 50ms
                 
     zadnjaVrednost = value; // ta vrednost se prebere iz nožice 2 večkrat na s
     
