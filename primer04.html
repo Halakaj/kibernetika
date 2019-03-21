@@ -7,8 +7,16 @@
 
 <body>
 
-<button id="gumbPrižgi1" onClick="prižgi1()">Prižgi Z</button>
-<button id="gumbUgasni1" onClick="ugasni1()">Ugasni Z</button>
+<button id="gumbPrižgi1" onClick="prižgi1()">Prižgi 1</button>
+<button id="gumbUgasni1" onClick="ugasni1()">Ugasni 1</button>
+<br>
+<br>
+<button id="gumbPrižgi2" onClick="prižgi2()">Prižgi 2</button>
+<button id="gumbUgasni2" onClick="ugasni2()">Ugasni 2</button>
+<br>
+<br>
+<button id="gumbPrižgi12" onClick="prižgi12()">Prižgi 2</button>
+<button id="gumbUgasni12" onClick="ugasni12()">Ugasni 2</button>
 
 <br>
 
@@ -17,10 +25,22 @@
 <script type="text/javascript">
 var socket = io.connect("192.168.1.101:8080"); // povez. prek vtičnika
 function prižgi1 () {
-    socket.emit("ukazArduinu", 1); // na strežnik pošljem 1
+    socket.emit("ukazArduinu1", 1); // na strežnik pošljem 1
 }
 function ugasni1 () {
-    socket.emit("ukazArduinu", 0); // na strežnik pošljem 0
+    socket.emit("ukazArduinu1", 0); // na strežnik pošljem 0
+}
+function prižgi2 () {
+    socket.emit("ukazArduinu2", 1); // na strežnik pošljem 1
+}
+function ugasni2 () {
+    socket.emit("ukazArduinu2", 0); // na strežnik pošljem 0
+}
+function prižgi12 () {
+    socket.emit("ukazArduinu12", 1); // na strežnik pošljem 1
+}
+function ugasni12 () {
+    socket.emit("ukazArduinu12", 0); // na strežnik pošljem 0
 }
 </script>
     

@@ -7,6 +7,7 @@ var board = new firmata.Board("/dev/ttyACM0", function(){// ACM (Abstract Contro
                                                          // za serijsko komunikacijo z Arduinom (lahko je USB)
     console.log("Priklop na Arduino");
     board.pinMode(13, board.MODES.OUTPUT); // Posamezni pin konfiguriramo, da deluje kot vhod ali izhod
+    board.pinMode(12, board.MODES.OUTPUT);
 });
 
 function handler(req, res) { // "handler", ki je uporabljen pri require("http").createServer(handler)
@@ -24,12 +25,30 @@ function handler(req, res) { // "handler", ki je uporabljen pri require("http").
 http.listen(8080); // strežnik bo poslušal na vratih 8080
 
 io.sockets.on("connection", function(socket) {
-    socket.on("ukazArduinu", function(štUkaza) {
+    socket.on("ukazArduinu1", function(štUkaza) {
         if (štUkaza == "1") {
             board.digitalWrite(13, board.HIGH); // zapišemo +5V na p. 13
         }
         if (štUkaza == "0") {
             board.digitalWrite(13, board.LOW); // zapišemo 0V na pin13
+        }
+    });
+    socket.on("ukazArduinu2", function(štUkaza) {
+        if (štUkaza == "1") {
+            board.digitalWrite(12, board.HIGH); // zapišemo +5V na p. 13
+        }
+        if (štUkaza == "0") {
+            board.digitalWrite(12, board.LOW); // zapišemo 0V na pin13
+        }
+    });
+    socket.on("ukazArduinu12", function(štUkaza) {
+        if (štUkaza == "1") {
+            board.digitalWrite(12, board.HIGH); // zapišemo +5V na p. 13
+            board.digitalWrite(13, board.HIGH);
+        }
+        if (štUkaza == "0") {
+            board.digitalWrite(12, board.LOW); // zapišemo 0V na pin13
+            board.digitalWrite(13, board.LOW);
         }
     });
 });
