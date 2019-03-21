@@ -61,7 +61,7 @@ var želenaVrednost = 0; // želeno vrednost postavimo na 0
 
 var dejanskaVrednost = 0; // dejansko vrednost postavimo na 0
 
-var faktor =0.6; // faktor, ki določa hitrost doseganja želenega stanja
+var faktor =0.1; // faktor, ki določa hitrost doseganja želenega stanja
 
 var pwm = 0;
 
@@ -192,3 +192,5 @@ function pošljiVrednosti(socket) {
     });
 
 };
+
+
