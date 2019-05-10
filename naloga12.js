@@ -71,7 +71,7 @@ board.on("ready", function(){
     
     io.sockets.on("connection", function(socket){
         
-        socket.emit("pošljiStatičnoSporočiloPrekoVtičnika", "Strežnik povezan, plošča pripravljena.")
+        socket.emit("pošljiStatičnoSporočiloPrekoVtičnika", "Stre��nik povezan, plošča pripravljena.")
 
         setInterval(pošljiVrednosti, 40, socket); // na 40ms pošlj. vred.
         
@@ -136,6 +136,7 @@ function startKontrolniAlgoritem (parametri) {
         console.log("Vključen kontrolni algoritem št. " + parametri.štKontrolnegaAlg)
         pošljiStatičnoSporočiloPrekoVtičnika("Kontrolni algoritem št. " + parametri.štKontrolnegaAlg + " zagnan | " + json2txt(parametri));
     }
+    
 }
 
 function stopKontrolniAlgoritem () {
